@@ -6,12 +6,40 @@ df1 <- data.frame(
 )
 
 test_that("starts_with works correctly", {
-
-  matched_formula <- tidyformula(
-    y ~ starts_with("x") + z,
-    df1,
-    c("starts_with", "contains")
-  )
   
-  expect_equal(matched_formula, y ~ x1 + x2 + x3 + z)
+  expect_equal(
+    tidyformula(y ~ starts_with("x") + z, df1),
+    y ~ x1 + x2 + x3 + z
+  )
+
+  expect_equal(
+    tidyformula( ~ starts_with("x") + z, df1),
+     ~ x1 + x2 + x3 + z
+  )
+})
+
+test_that("Distribution of functions works", {
+
+  expect_equal(
+    tidyformula(y ~ log(starts_with("x")) + z, df1),
+    y ~ log(x1) + log(x2) + log(x3) + z
+  )
+
+  expect_equal(
+    tidyformula( ~ poly(starts_with("x"), 3) + z, df1),
+     ~ poly(x1, 3) + poly(x2, 3) + poly(x3, 3) + z
+  )
+})
+
+test_that("Distribution of interactions works", {
+
+  expect_equal(
+    tidyformula(y ~ starts_with("x"):z, df1),
+    y ~ x1:z + x2:z + x3:z
+  )
+
+  expect_equal(
+    tidyformula( ~ starts_with("x")*z, df1),
+     ~ x1*z + x2*z + x3*z
+  )
 })

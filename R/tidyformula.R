@@ -1,8 +1,13 @@
 #' Build a formula using `tidyselect`-style selection helperts
 #'
+#' @description
 #' `tidyformula` translate formulas containing `tidyselect`-style
 #' [selection helpers][tidyselect::language], expanding these helpers by evaluating
 #' [`dplyr::select`] with the relevant selection helper and a supplied data frame.
+#'
+#' When the selection helper appears as the first argument of a function (this
+#' includes interaction designators), that function is distributed across the
+#' sum of the selected variables.
 #' 
 #' @param formula An object of class [`formula`]. Can contain selection helpers
 #' to be expanded
@@ -14,13 +19,18 @@
 #' @section Examples:
 #' 
 #' ```{r, comment = "#>", collapse = TRUE}
-#' df1 <- data.frame(
+#' df <- data.frame(
 #'   x1 = rnorm(5),
 #'   x2 = rnorm(5),
+#'   x3 = rnorm(5),
 #'   y  = rnorm(5)
 #' )
 #' 
-#' tidyformula(y ~ starts_with("x") + z, data = df1)
+#' tidyformula(y ~ num_range("x", 1:2) + z, data = df)
+#'
+#' tidyformula(y ~ poly(starts_with("x"), 3), data = df)
+#'
+#' tidyformula( ~ everything()*z, data = df)
 #' ```
 #' @export
 tidyformula <- function(formula,
@@ -42,15 +52,18 @@ replace_call <- function(x, df, matches) {
     var_names  <- names(sub_df)
     
     reformulate(var_names)[[2]]
+    
   } else {
+    
     as.call(c(
-      list(x[[1]]),
+      x[[1]],
       purrr::map(x[-1], ~ replace_match(.x, df, matches))
     ))
+    
   }
 }
 
-replace_match <- function(x, ...) {
+replace_match <- function(x, df, matches) {
   switch_expr(
     x,
 
@@ -60,6 +73,18 @@ replace_match <- function(x, ...) {
 
     # recursive case
     pairlist = ,
-    call = replace_call(x, ...)
+    call =
+      if(x[[1]] != quote(`+`) &&
+           is.call(x[[2]]) &&
+           rlang::as_string(x[[2]][[1]]) %in% matches)
+      {
+        distribute(
+          x = replace_call(x[[2]], df, matches),
+          f = x[[1]],
+          supp_args = as.list(x[-c(1, 2)])
+        )
+      } else {
+        replace_call(x, df, matches)
+      } 
   )
 }

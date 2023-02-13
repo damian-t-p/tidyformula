@@ -26,19 +26,32 @@ be matched and substituted}
 \code{tidyformula} translate formulas containing \code{tidyselect}-style
 \link[tidyselect:language]{selection helpers}, expanding these helpers by evaluating
 \code{\link[dplyr:select]{dplyr::select}} with the relevant selection helper and a supplied data frame.
+
+When the selection helper appears as the first argument of a function (this
+includes interaction designators), that function is distributed across the
+sum of the selected variables.
 }
 \section{Examples}{
 
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{df1 <- data.frame(
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{df <- data.frame(
   x1 = rnorm(5),
   x2 = rnorm(5),
+  x3 = rnorm(5),
   y  = rnorm(5)
 )
 
-tidyformula(y ~ starts_with("x") + z, data = df1)
+tidyformula(y ~ num_range("x", 1:2) + z, data = df)
 #> y ~ x1 + x2 + z
-#> <environment: 0x000002b40112c830>
+#> <environment: 0x000001b3de3aeb98>
+
+tidyformula(y ~ poly(starts_with("x"), 3), data = df)
+#> y ~ poly(x1, 3) + poly(x2, 3) + poly(x3, 3)
+#> <environment: 0x000001b3de3aeb98>
+
+tidyformula( ~ everything()*z, data = df)
+#> ~x1 * z + x2 * z + x3 * z + y * z
+#> <environment: 0x000001b3de3aeb98>
 }\if{html}{\out{</div>}}
 }
 
