@@ -19,6 +19,7 @@ knitr::opts_chunk$set(
 
 <!-- badges: start -->
 [![R-CMD-check](https://github.com/damian-t-p/tidyformula/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/damian-t-p/tidyformula/actions/workflows/R-CMD-check.yaml)
+[![test-coverage](https://github.com/damian-t-p/tidyformula/actions/workflows/test-coverage.yaml/badge.svg)](https://github.com/damian-t-p/tidyformula/actions/workflows/test-coverage.yaml)
 <!-- badges: end -->
 
 `tidyformula` translate formulas containing `tidyselect`-style selection helpers, expanding these helpers by evaluating `dplyr::select` with the relevant selection helper on a supplied data frame.
