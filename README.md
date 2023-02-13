@@ -7,8 +7,8 @@
 <!-- badges: end -->
 
 `tidyformula` translate formulas containing `tidyselect`-style selection
-helpers\], expanding these helpers by evaluating `dplyr::select` with
-the relevant selection helper and a supplied data frame.
+helpers, expanding these helpers by evaluating `dplyr::select` with the
+relevant selection helper on a supplied data frame.
 
 ## Installation
 
@@ -41,7 +41,7 @@ variables can be combined with other variables in the formula:
 ``` r
 tidyformula(y ~ starts_with("x") + z, data = df)
 #> y ~ x1 + x2 + x3 + z
-#> <environment: 0x0000023b2a53f6d0>
+#> <environment: 0x000001aac4a006e0>
 ```
 
 The selection helper can have additional arguments, as with `num_range`
@@ -49,7 +49,7 @@ The selection helper can have additional arguments, as with `num_range`
 ``` r
 tidyformula(y ~ num_range("x", 1:2) + z, data = df)
 #> y ~ x1 + x2 + z
-#> <environment: 0x0000023b2a53f6d0>
+#> <environment: 0x000001aac4a006e0>
 ```
 
 When the selection helper appears as the first argument of a function,
@@ -60,7 +60,7 @@ This works with single-argument functions
 ``` r
 tidyformula(y ~ log(contains("x")), data = df)
 #> y ~ log(x1) + log(x2) + log(x3)
-#> <environment: 0x0000023b2a53f6d0>
+#> <environment: 0x000001aac4a006e0>
 ```
 
 as well as multiple-argument ones
@@ -68,13 +68,14 @@ as well as multiple-argument ones
 ``` r
 tidyformula(y ~ poly(contains("x"), 3), data = df)
 #> y ~ poly(x1, 3) + poly(x2, 3) + poly(x3, 3)
-#> <environment: 0x0000023b2a53f6d0>
+#> <environment: 0x000001aac4a006e0>
 ```
 
-This also applies to interaction terms
+including interaction terms, which have the same format as two-argument
+functions
 
 ``` r
 tidyformula( ~ everything()*z, data = df)
 #> ~x1 * z + x2 * z + x3 * z + y * z
-#> <environment: 0x0000023b2a53f6d0>
+#> <environment: 0x000001aac4a006e0>
 ```

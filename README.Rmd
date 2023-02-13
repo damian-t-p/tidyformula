@@ -20,9 +20,7 @@ knitr::opts_chunk$set(
 <!-- badges: start -->
 <!-- badges: end -->
 
-`tidyformula` translate formulas containing `tidyselect`-style
-selection helpers], expanding these helpers by evaluating
-`dplyr::select` with the relevant selection helper and a supplied data frame.
+`tidyformula` translate formulas containing `tidyselect`-style selection helpers, expanding these helpers by evaluating `dplyr::select` with the relevant selection helper on a supplied data frame.
 
 ## Installation
 
@@ -69,8 +67,7 @@ as well as multiple-argument ones
 ```{r}
 tidyformula(y ~ poly(contains("x"), 3), data = df)
 ```
-
-This also applies to interaction terms
+including interaction terms, which have the same format as two-argument functions
 ```{r}
 tidyformula( ~ everything()*z, data = df)
 ```

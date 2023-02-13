@@ -1,3 +1,10 @@
+#' Distributes a function across a call tree
+#' 
+#' @param x An expression
+#' @param f An symbol. The name of the function to distribute across `x`
+#' @param supp_args A list of symbols or literals containing other arguments to `f`
+#'
+#' @noRd
 distribute <- function(x, f, supp_args = NULL) {
 
   switch_expr(
