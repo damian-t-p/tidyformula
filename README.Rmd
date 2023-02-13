@@ -1,0 +1,76 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%",
+  warning = FALSE,
+  message = FALSE
+)
+```
+
+# tidyformula
+
+<!-- badges: start -->
+<!-- badges: end -->
+
+`tidyformula` translate formulas containing `tidyselect`-style
+selection helpers], expanding these helpers by evaluating
+`dplyr::select` with the relevant selection helper and a supplied data frame.
+
+## Installation
+
+You can install the development version of tidyformula from [GitHub](https://github.com/) with:
+
+```{r}
+# install.packages("devtools")
+devtools::install_github("damian-t-p/tidyformula")
+```
+
+## Example
+
+We can build formulas from variables in the following data frams:
+
+```{r example}
+library(tidyformula)
+
+df <- data.frame(
+   x1 = rnorm(5),
+   x2 = rnorm(5),
+   x3 = rnorm(5),
+   y  = rnorm(5)
+ ) 
+```
+
+The simplest usage is adding a selection of variables.
+The tidy-selected variables can be combined with other variables in the formula:
+```{r}
+tidyformula(y ~ starts_with("x") + z, data = df)
+```
+
+The selection helper can have additional arguments, as with `num_range`
+```{r}
+tidyformula(y ~ num_range("x", 1:2) + z, data = df)
+```
+
+When the selection helper appears as the first argument of a function, that function is distributed across the sum of the selected variables.
+
+This works with single-argument functions
+```{r}
+tidyformula(y ~ log(contains("x")), data = df)
+```
+as well as multiple-argument ones
+```{r}
+tidyformula(y ~ poly(contains("x"), 3), data = df)
+```
+
+This also applies to interaction terms
+```{r}
+tidyformula( ~ everything()*z, data = df)
+```

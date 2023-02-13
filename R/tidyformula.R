@@ -11,7 +11,7 @@
 #' 
 #' @param formula An object of class [`formula`]. Can contain selection helpers
 #' to be expanded
-#' @param df A data frame whose column names should be used for selection
+#' @param data A data frame whose column names should be used for selection
 #' @param select_helpers A character vector. The names of selection helpers to
 #' be matched and substituted
 #' @param env The environment to associate with the result

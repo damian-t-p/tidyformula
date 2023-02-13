@@ -15,12 +15,12 @@ tidyformula(
 \item{formula}{An object of class \code{\link{formula}}. Can contain selection helpers
 to be expanded}
 
+\item{data}{A data frame whose column names should be used for selection}
+
 \item{select_helpers}{A character vector. The names of selection helpers to
 be matched and substituted}
 
 \item{env}{The environment to associate with the result}
-
-\item{df}{A data frame whose column names should be used for selection}
 }
 \description{
 \code{tidyformula} translate formulas containing \code{tidyselect}-style
@@ -43,15 +43,15 @@ sum of the selected variables.
 
 tidyformula(y ~ num_range("x", 1:2) + z, data = df)
 #> y ~ x1 + x2 + z
-#> <environment: 0x000001b3de3aeb98>
+#> <environment: 0x0000016f9021c2a8>
 
 tidyformula(y ~ poly(starts_with("x"), 3), data = df)
 #> y ~ poly(x1, 3) + poly(x2, 3) + poly(x3, 3)
-#> <environment: 0x000001b3de3aeb98>
+#> <environment: 0x0000016f9021c2a8>
 
 tidyformula( ~ everything()*z, data = df)
 #> ~x1 * z + x2 * z + x3 * z + y * z
-#> <environment: 0x000001b3de3aeb98>
+#> <environment: 0x0000016f9021c2a8>
 }\if{html}{\out{</div>}}
 }
 

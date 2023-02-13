@@ -1,12 +1,12 @@
 Package: tidyformula
-Title: What the Package Does (One Line, Title Case)
+Title: Build fomula using tidyselect selection helpers
 Version: 0.0.0.9000
 Authors@R: 
-    person("First", "Last", , "first.last@example.com", role = c("aut", "cre"),
-           comment = c(ORCID = "YOUR-ORCID-ID"))
-Description: What the package does (one paragraph).
-License: `use_mit_license()`, `use_gpl3_license()` or friends to pick a
-    license
+    person("Damian", "Pavlyshyn", email = "damian.pavlyshyn@gmail.com", role = c("aut", "cre"),
+	       comment = c(ORCID = "0000-0001-6929-878X"))
+Description: Provides the function `tidyformula`, which translates formulas containing `tidyselect`-style selection helpers expanding these helpers by evaluating
+`dplyr::select` with the relevant selection helper and a supplied data frame.
+License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.2
