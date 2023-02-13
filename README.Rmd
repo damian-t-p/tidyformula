@@ -28,7 +28,7 @@ selection helpers], expanding these helpers by evaluating
 
 You can install the development version of tidyformula from [GitHub](https://github.com/) with:
 
-```{r}
+``` r
 # install.packages("devtools")
 devtools::install_github("damian-t-p/tidyformula")
 ```
