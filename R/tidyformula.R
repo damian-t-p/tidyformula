@@ -1,7 +1,34 @@
+#' Build a formula using `tidyselect`-style selection helperts
+#'
+#' `tidyformula` translate formulas containing `tidyselect`-style
+#' [selection helpers][tidyselect::language], expanding these helpers by evaluating
+#' [`dplyr::select`] with the relevant selection helper and a supplied data frame.
+#' 
+#' @param formula An object of class [`formula`]. Can contain selection helpers
+#' to be expanded
+#' @param df A data frame whose column names should be used for selection
+#' @param select_helpers A character vector. The names of selection helpers to
+#' be matched and substituted
+#' @param env The environment to associate with the result
+#'
+#' @section Examples:
+#' 
+#' ```{r, comment = "#>", collapse = TRUE}
+#' df1 <- data.frame(
+#'   x1 = rnorm(5),
+#'   x2 = rnorm(5),
+#'   y  = rnorm(5)
+#' )
+#' 
+#' tidyformula(y ~ starts_with("x") + z, data = df1)
+#' ```
 #' @export
-tidyformula <- function(formula, df, matches, env = parent.frame()) {
+tidyformula <- function(formula,
+                        data,
+                        select_helpers = .select_helpers,
+                        env            = rlang::caller_env()) {
   eval(
-    replace_match(formula, df, matches),
+    replace_match(formula, data, select_helpers),
     envir = env
   )
 }

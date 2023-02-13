@@ -10,8 +10,7 @@ test_that("starts_with works correctly", {
   matched_formula <- tidyformula(
     y ~ starts_with("x") + z,
     df1,
-    c("starts_with", "contains"),
-    env = environment()
+    c("starts_with", "contains")
   )
   
   expect_equal(matched_formula, y ~ x1 + x2 + x3 + z)
