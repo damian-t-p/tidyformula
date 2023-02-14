@@ -43,15 +43,15 @@ sum of the selected variables.
 
 tidyformula(y ~ num_range("x", 1:2) + z, data = df)
 #> y ~ x1 + x2 + z
-#> <environment: 0x0000016f9021c2a8>
+#> <environment: 0x0000025d9d938b40>
 
 tidyformula(y ~ poly(starts_with("x"), 3), data = df)
 #> y ~ poly(x1, 3) + poly(x2, 3) + poly(x3, 3)
-#> <environment: 0x0000016f9021c2a8>
+#> <environment: 0x0000025d9d938b40>
 
 tidyformula( ~ everything()*z, data = df)
 #> ~x1 * z + x2 * z + x3 * z + y * z
-#> <environment: 0x0000016f9021c2a8>
+#> <environment: 0x0000025d9d938b40>
 }\if{html}{\out{</div>}}
 }
 

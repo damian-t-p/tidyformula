@@ -1,4 +1,7 @@
 #' Distributes a function across a call tree
+#'
+#' @description
+#' Applies the function `f` to all symbols at the leaves of a call tree.
 #' 
 #' @param x An expression
 #' @param f An symbol. The name of the function to distribute across `x`

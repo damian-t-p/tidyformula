@@ -38,53 +38,9 @@ tidyformula <- function(formula,
                         select_helpers = .select_helpers,
                         env            = rlang::caller_env()) {
   eval(
-    replace_match(formula, data, select_helpers),
+    replace_expr(formula, data[NULL, ], select_helpers),
     envir = env
   )
 }
 
-replace_call <- function(x, df, matches) {
-  if(rlang::as_string(x[[1]]) %in% matches) {
 
-    match_call <- rlang::call2(rlang::expr(dplyr::select), rlang::expr(df), x)
-    
-    sub_df     <- eval(match_call)
-    var_names  <- names(sub_df)
-    
-    reformulate(var_names)[[2]]
-    
-  } else {
-    
-    as.call(c(
-      x[[1]],
-      purrr::map(x[-1], ~ replace_match(.x, df, matches))
-    ))
-    
-  }
-}
-
-replace_match <- function(x, df, matches) {
-  switch_expr(
-    x,
-
-    # base case: do nothing
-    constant = ,
-    symbol = x,
-
-    # recursive case
-    pairlist = ,
-    call =
-      if(x[[1]] != quote(`+`) &&
-           is.call(x[[2]]) &&
-           rlang::as_string(x[[2]][[1]]) %in% matches)
-      {
-        distribute(
-          x = replace_call(x[[2]], df, matches),
-          f = x[[1]],
-          supp_args = as.list(x[-c(1, 2)])
-        )
-      } else {
-        replace_call(x, df, matches)
-      } 
-  )
-}
