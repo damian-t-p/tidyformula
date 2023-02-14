@@ -1,11 +1,11 @@
 Package: tidyformula
 Title: Build fomula using tidyselect selection helpers
-Version: 0.0.0.9000
+Version: 0.1.0
 Authors@R: 
     person("Damian", "Pavlyshyn", email = "damian.pavlyshyn@gmail.com", role = c("aut", "cre"),
 	       comment = c(ORCID = "0000-0001-6929-878X"))
 Description: Provides the function `tidyformula`, which translates formulas containing `tidyselect`-style selection helpers expanding these helpers by evaluating
-`dplyr::select` with the relevant selection helper and a supplied data frame.
+`dplyr: :select` with the relevant selection helper and a supplied data frame.
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
