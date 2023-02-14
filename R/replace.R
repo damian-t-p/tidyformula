@@ -13,7 +13,7 @@ replace_call <- function(x, df, matches) {
     sub_df     <- eval(match_call)
     var_names  <- names(sub_df)
     
-    reformulate(var_names)[[2]]
+    stats::reformulate(var_names)[[2]]
     
   } else if (x[[1]] != quote(`+`) &&
                is.call(x[[2]]) &&
