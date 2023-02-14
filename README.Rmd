@@ -35,7 +35,7 @@ devtools::install_github("damian-t-p/tidyformula")
 
 ## Example
 
-We can build formulas from variables in the following data frams:
+We can build formulas from variables in the following data frames:
 
 ```{r example}
 library(tidyformula)

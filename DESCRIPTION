@@ -1,5 +1,5 @@
 Package: tidyformula
-Title: Build fomula using tidyselect selection helpers
+Title: Build Formulas Using Tidy Selection Helpers
 Version: 0.1.0
 Authors@R: 
     person("Damian", "Pavlyshyn", email = "damian.pavlyshyn@gmail.com", role = c("aut", "cre"),

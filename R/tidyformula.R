@@ -1,4 +1,4 @@
-#' Build a formula using `tidyselect`-style selection helperts
+#' Build a formula using `tidyselect`-style selection helpers
 #'
 #' @description
 #' `tidyformula` translate formulas containing `tidyselect`-style
