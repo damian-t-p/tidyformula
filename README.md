@@ -6,7 +6,7 @@
 <!-- badges: start -->
 
 [![R-CMD-check](https://github.com/damian-t-p/tidyformula/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/damian-t-p/tidyformula/actions/workflows/R-CMD-check.yaml)
-[![codecov](https://codecov.io/gh/damian-t-p/tidyformula/branch/main/graph/badge.svg?token=WX5JP57DHW)](https://codecov.io/gh/damian-t-p/tidyformula)
+[![codecov](https://codecov.io/gh/damian-t-p/tidyformula/branch/main/graph/badge.svg?token=WX5JP57DHW)](https://app.codecov.io/gh/damian-t-p/tidyformula/)
 <!-- badges: end -->
 
 `tidyformula` translate formulas containing `tidyselect`-style selection
@@ -44,7 +44,7 @@ variables can be combined with other variables in the formula:
 ``` r
 tidyformula(y ~ starts_with("x") + z, data = df)
 #> y ~ x1 + x2 + x3 + z
-#> <environment: 0x000001ed67b51750>
+#> <environment: 0x000002426e4a8740>
 ```
 
 The selection helper can have additional arguments, as with `num_range`
@@ -52,7 +52,7 @@ The selection helper can have additional arguments, as with `num_range`
 ``` r
 tidyformula(y ~ num_range("x", 1:2) + z, data = df)
 #> y ~ x1 + x2 + z
-#> <environment: 0x000001ed67b51750>
+#> <environment: 0x000002426e4a8740>
 ```
 
 When the selection helper appears as the first argument of a function,
@@ -63,7 +63,7 @@ This works with single-argument functions
 ``` r
 tidyformula(y ~ log(contains("x")), data = df)
 #> y ~ log(x1) + log(x2) + log(x3)
-#> <environment: 0x000001ed67b51750>
+#> <environment: 0x000002426e4a8740>
 ```
 
 as well as multiple-argument ones
@@ -71,7 +71,7 @@ as well as multiple-argument ones
 ``` r
 tidyformula(y ~ poly(contains("x"), 3), data = df)
 #> y ~ poly(x1, 3) + poly(x2, 3) + poly(x3, 3)
-#> <environment: 0x000001ed67b51750>
+#> <environment: 0x000002426e4a8740>
 ```
 
 including interaction terms, which have the same format as two-argument
@@ -80,5 +80,5 @@ functions
 ``` r
 tidyformula( ~ everything()*z, data = df)
 #> ~x1 * z + x2 * z + x3 * z + y * z
-#> <environment: 0x000001ed67b51750>
+#> <environment: 0x000002426e4a8740>
 ```
