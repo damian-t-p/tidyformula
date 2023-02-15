@@ -50,3 +50,24 @@ test_that("Distribution of interactions works correctly", {
      ~ x1*z + x2*z + x3*z
   )
 })
+
+test_that("tidyformula handles weird data frames", {
+
+  df_onecol <- data.frame(a = 1:5)
+
+  expect_equal(
+    tidyformula( ~ everything(), df_onecol),
+    ~ a
+  )
+
+  df_empty <- data.frame()
+  
+  expect_error(
+    tidyformula( ~ everything(), df_empty)
+  )
+
+  expect_no_error(
+    tidyformula( ~ x, df_empty)
+  )
+  
+})

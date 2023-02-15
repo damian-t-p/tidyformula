@@ -39,8 +39,24 @@ tidyformula <- function(formula,
                         select_helpers = .select_helpers,
                         nodistribute   = c("+", "-", "*", "^"),
                         env            = rlang::caller_env()) {
+
+  # To avoid passing a big data frame around in the internal functions, drop
+  # all of the rows of data.
+  #
+  # R has strange behaviour, where if a base R data frame has a single column, then slicing
+  # rows using data[v, ] returns a vector. So account for this.
+  #
+  # tibbles do not have this issue, so we check if the class of data is exactly equal to
+  # data.frame rather than using is.data.frame()
+  if(setequal(class(data), "data.frame") && ncol(data) == 1) {
+    data_colnamesonly <- data.frame(data[NULL,])
+    names(data_colnamesonly) <- names(data)
+  } else {
+    data_colnamesonly <- data[NULL, ]
+  }
+  
   eval(
-    replace_expr(formula, data[NULL, ], select_helpers, nodistribute),
+    replace_expr(formula, data_colnamesonly, select_helpers, nodistribute),
     envir = env
   )
 }
