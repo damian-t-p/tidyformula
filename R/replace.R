@@ -5,7 +5,7 @@
 #' @param matches A character vector of selection helpers to match
 #'
 #' @noRd
-replace_call <- function(x, df, matches) {
+replace_call <- function(x, df, matches, nodistribute) {
   if(rlang::as_string(x[[1]]) %in% matches) {
 
     match_call <- rlang::call2(rlang::expr(dplyr::select), rlang::expr(df), x)
@@ -15,7 +15,7 @@ replace_call <- function(x, df, matches) {
     
     stats::reformulate(var_names)[[2]]
     
-  } else if (x[[1]] != quote(`+`) &&
+  } else if (!(deparse(x[[1]]) %in% nodistribute) &&
                is.call(x[[2]]) &&
                rlang::as_string(x[[2]][[1]]) %in% matches)  {
 
@@ -23,7 +23,7 @@ replace_call <- function(x, df, matches) {
     # In this case, the function should be distributes over the selected variables
     
     distribute(
-          x = replace_call(x[[2]], df, matches),
+          x = replace_call(x[[2]], df, matches, nodistribute),
           f = x[[1]],
           supp_args = as.list(x[-c(1, 2)])
     )
@@ -32,7 +32,7 @@ replace_call <- function(x, df, matches) {
     
     as.call(c(
       x[[1]],
-      purrr::map(x[-1], ~ replace_expr(.x, df, matches))
+      purrr::map(x[-1], ~ replace_expr(.x, df, matches, nodistribute))
     ))
     
   }

@@ -8,6 +8,7 @@ tidyformula(
   formula,
   data,
   select_helpers = .select_helpers,
+  nodistribute = c("+", "-", "*", "^"),
   env = rlang::caller_env()
 )
 }
@@ -20,16 +21,18 @@ to be expanded}
 \item{select_helpers}{A character vector. The names of selection helpers to
 be matched and substituted}
 
+\item{nodistribute}{A character vector. Functions with these names should not
+be distributed over selection helpers.}
+
 \item{env}{The environment to associate with the result}
 }
 \description{
-\code{tidyformula} translate formulas containing \code{tidyselect}-style
+\code{tidyformula} translates formulas containing \code{tidyselect}-style
 \link[tidyselect:language]{selection helpers}, expanding these helpers by evaluating
 \code{\link[dplyr:select]{dplyr::select}} with the relevant selection helper and a supplied data frame.
 
-When the selection helper appears as the first argument of a function (this
-includes interaction designators), that function is distributed across the
-sum of the selected variables.
+When the selection helper appears as the first argument of a function, that
+function is distributed across the sum of the selected variables.
 }
 \section{Examples}{
 
@@ -43,15 +46,15 @@ sum of the selected variables.
 
 tidyformula(y ~ num_range("x", 1:2) + z, data = df)
 #> y ~ x1 + x2 + z
-#> <environment: 0x00000186ec7de1f0>
+#> <environment: 0x000001a5e76641e8>
 
 tidyformula(y ~ poly(starts_with("x"), 3), data = df)
 #> y ~ poly(x1, 3) + poly(x2, 3) + poly(x3, 3)
-#> <environment: 0x00000186ec7de1f0>
+#> <environment: 0x000001a5e76641e8>
 
-tidyformula( ~ everything()*z, data = df)
-#> ~x1 * z + x2 * z + x3 * z + y * z
-#> <environment: 0x00000186ec7de1f0>
+tidyformula( ~ everything() * contains("x"), data = df)
+#> ~(x1 + x2 + x3 + y) * (x1 + x2 + x3)
+#> <environment: 0x000001a5e76641e8>
 }\if{html}{\out{</div>}}
 }
 

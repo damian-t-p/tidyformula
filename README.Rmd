@@ -22,7 +22,7 @@ knitr::opts_chunk$set(
 [![codecov](https://codecov.io/gh/damian-t-p/tidyformula/branch/main/graph/badge.svg?token=WX5JP57DHW)](https://app.codecov.io/gh/damian-t-p/tidyformula/)
 <!-- badges: end -->
 
-`tidyformula` translate formulas containing `tidyselect`-style selection helpers, expanding these helpers by evaluating `dplyr::select` with the relevant selection helper on a supplied data frame.
+`tidyformula` translates formulas containing `tidyselect`-style selection helpers, expanding these helpers by evaluating `dplyr::select` with the relevant selection helper on a supplied data frame.
 
 ## Installation
 
@@ -35,7 +35,7 @@ devtools::install_github("damian-t-p/tidyformula")
 
 ## Example
 
-We can build formulas from variables in the following data frames:
+We demonstrate how to build formulas from the variables of the following toy data frame:
 
 ```{r example}
 library(tidyformula)
@@ -65,11 +65,19 @@ This works with single-argument functions
 ```{r}
 tidyformula(y ~ log(contains("x")), data = df)
 ```
-as well as multiple-argument ones
+as well as multiple-argument ones.
 ```{r}
 tidyformula(y ~ poly(contains("x"), 3), data = df)
 ```
-including interaction terms, which have the same format as two-argument functions
+
+The functions ``+``, ``-``, ``*``, and ``^`` are not distributed by default.
 ```{r}
-tidyformula( ~ everything()*z, data = df)
+tidyformula( ~ everything()*z + starts_with("x")^2, data = df)
+```
+
+This behaviour can be overwritten with the `nodistribute` argument, which is a character vector of functions that should not be distributed.
+```{r}
+tidyformula( ~ everything()*z + starts_with("x")^2,
+            data         = df,
+            nodistribute = c("+", "-"))
 ```
