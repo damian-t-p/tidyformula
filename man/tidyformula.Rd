@@ -14,22 +14,27 @@ tidyformula(
 }
 \arguments{
 \item{formula}{An object of class \code{\link{formula}}. Can contain selection helpers
-to be expanded}
+to be expanded.}
 
 \item{data}{A data frame whose column names should be used for selection}
 
 \item{select_helpers}{A character vector. The names of selection helpers to
-be matched and substituted}
+be matched and substituted.}
 
-\item{nodistribute}{A character vector. Functions with these names should not
-be distributed over selection helpers.}
+\item{nodistribute}{A character vector. Functions with these names are not
+distributed over selection helpers.}
 
-\item{env}{The environment to associate with the result}
+\item{env}{The environment to associate with the result.}
+}
+\value{
+An object of class \code{\link{formula}}, which is a translation of the argument
+\code{formula} in which the selection helpers are replaced with the corresponding
+variables of \code{data}.
 }
 \description{
-\code{tidyformula} translates formulas containing \code{tidyselect}-style
+\code{tidyformula()} translates formulas containing \code{tidyselect}-style
 \link[tidyselect:language]{selection helpers}, expanding these helpers by evaluating
-\code{\link[dplyr:select]{dplyr::select}} with the relevant selection helper and a supplied data frame.
+\code{\link[dplyr:select]{dplyr::select()}} with the relevant selection helper and a supplied data frame.
 
 When the selection helper appears as the first argument of a function, that
 function is distributed across the sum of the selected variables.
@@ -46,15 +51,30 @@ function is distributed across the sum of the selected variables.
 
 tidyformula(y ~ num_range("x", 1:2) + z, data = df)
 #> y ~ x1 + x2 + z
-#> <environment: 0x000001a5e76641e8>
+#> <environment: 0x000001c522033f58>
 
 tidyformula(y ~ poly(starts_with("x"), 3), data = df)
 #> y ~ poly(x1, 3) + poly(x2, 3) + poly(x3, 3)
-#> <environment: 0x000001a5e76641e8>
+#> <environment: 0x000001c522033f58>
 
 tidyformula( ~ everything() * contains("x"), data = df)
 #> ~(x1 + x2 + x3 + y) * (x1 + x2 + x3)
-#> <environment: 0x000001a5e76641e8>
+#> <environment: 0x000001c522033f58>
+}\if{html}{\out{</div>}}
+
+Interaction operators are typically not distributed, but this behaviour can be changed.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tidyformula(y ~ starts_with("x")^2, data = df)
+#> y ~ (x1 + x2 + x3)^2
+#> <environment: 0x000001c522033f58>
+
+tidyformula(y ~ starts_with("x")^2, data = df, nodistribute = c("+", "-"))
+#> y ~ x1^2 + x2^2 + x3^2
+#> <environment: 0x000001c522033f58>
 }\if{html}{\out{</div>}}
 }
 
+\seealso{
+\code{\link[dplyr:select]{dplyr::select()}}, \code{\link[tidyselect:language]{tidyselect::language}} for
+documentation of selection helpers.
+}

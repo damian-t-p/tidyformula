@@ -1,10 +1,9 @@
 #' Utility functions for traversing ASTs
 #'
-#' Taken verbatim from Section 18.5 of Hadley Wickham, "Advanced R" 2nd ed, CRC press,
+#' Taken verbatim from Section 18.5 of Wickham, Hadley (2019) <doi:10.1201/9781351201315>
 #' URL: https://adv-r.hadley.nz/expressions.html#ast-funs
 #'
 #' @noRd
-
 expr_type <- function(x) {
   if (rlang::is_syntactic_literal(x)) {
     "constant"

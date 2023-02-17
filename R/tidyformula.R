@@ -1,22 +1,29 @@
 #' Build a formula using `tidyselect`-style selection helpers
 #'
 #' @description
-#' `tidyformula` translates formulas containing `tidyselect`-style
+#' `tidyformula()` translates formulas containing `tidyselect`-style
 #' [selection helpers][tidyselect::language], expanding these helpers by evaluating
-#' [`dplyr::select`] with the relevant selection helper and a supplied data frame.
+#' [`dplyr::select()`] with the relevant selection helper and a supplied data frame.
 #'
 #' When the selection helper appears as the first argument of a function, that
 #' function is distributed across the sum of the selected variables.
 #' 
 #' @param formula An object of class [`formula`]. Can contain selection helpers
-#' to be expanded
+#' to be expanded.
 #' @param data A data frame whose column names should be used for selection
 #' @param select_helpers A character vector. The names of selection helpers to
-#' be matched and substituted
-#' @param nodistribute A character vector. Functions with these names should not
-#' be distributed over selection helpers.
-#' @param env The environment to associate with the result
+#' be matched and substituted.
+#' @param nodistribute A character vector. Functions with these names are not
+#' distributed over selection helpers.
+#' @param env The environment to associate with the result.
 #'
+#' @return An object of class [`formula`], which is a translation of the argument
+#' `formula` in which the selection helpers are replaced with the corresponding
+#' variables of `data`.
+#'
+#' @seealso [`dplyr::select()`], [`tidyselect::language`] for
+#' documentation of selection helpers.
+#' 
 #' @section Examples:
 #' 
 #' ```{r, comment = "#>", collapse = TRUE}
@@ -32,6 +39,13 @@
 #' tidyformula(y ~ poly(starts_with("x"), 3), data = df)
 #'
 #' tidyformula( ~ everything() * contains("x"), data = df)
+#'```
+#'
+#' Interaction operators are typically not distributed, but this behaviour can be changed.
+#' ```{r, comment = "#>", collapse = TRUE}
+#' tidyformula(y ~ starts_with("x")^2, data = df)
+#' 
+#' tidyformula(y ~ starts_with("x")^2, data = df, nodistribute = c("+", "-"))
 #' ```
 #' @export
 tidyformula <- function(formula,

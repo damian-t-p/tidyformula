@@ -22,7 +22,7 @@ knitr::opts_chunk$set(
 [![codecov](https://codecov.io/gh/damian-t-p/tidyformula/branch/main/graph/badge.svg?token=WX5JP57DHW)](https://app.codecov.io/gh/damian-t-p/tidyformula/)
 <!-- badges: end -->
 
-`tidyformula` translates formulas containing `tidyselect`-style selection helpers, expanding these helpers by evaluating `dplyr::select` with the relevant selection helper on a supplied data frame.
+`tidyformula()` translates formulas containing `tidyselect`-style selection helpers, expanding these helpers by evaluating `dplyr::select()` with the relevant selection helper on a supplied data frame.
 
 ## Installation
 
