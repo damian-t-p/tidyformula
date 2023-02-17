@@ -17,9 +17,8 @@ There was 1 NOTE:
 Possibly misspelled words in DESCRIPTION:
   Hadley (7:327)
   Wickham (7:318)
-  tidyselect (7:91)
   
-  These are correct personal names and the name of an R package.
+  These are correct personal names.
 
 ## Downstream dependencies
 There are no downstream dependencies for this package

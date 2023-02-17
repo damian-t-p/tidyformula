@@ -51,26 +51,26 @@ function is distributed across the sum of the selected variables.
 
 tidyformula(y ~ num_range("x", 1:2) + z, data = df)
 #> y ~ x1 + x2 + z
-#> <environment: 0x000001c522033f58>
+#> <environment: 0x000001e0d7d53910>
 
 tidyformula(y ~ poly(starts_with("x"), 3), data = df)
 #> y ~ poly(x1, 3) + poly(x2, 3) + poly(x3, 3)
-#> <environment: 0x000001c522033f58>
+#> <environment: 0x000001e0d7d53910>
 
 tidyformula( ~ everything() * contains("x"), data = df)
 #> ~(x1 + x2 + x3 + y) * (x1 + x2 + x3)
-#> <environment: 0x000001c522033f58>
+#> <environment: 0x000001e0d7d53910>
 }\if{html}{\out{</div>}}
 
 Interaction operators are typically not distributed, but this behaviour can be changed.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{tidyformula(y ~ starts_with("x")^2, data = df)
 #> y ~ (x1 + x2 + x3)^2
-#> <environment: 0x000001c522033f58>
+#> <environment: 0x000001e0d7d53910>
 
 tidyformula(y ~ starts_with("x")^2, data = df, nodistribute = c("+", "-"))
 #> y ~ x1^2 + x2^2 + x3^2
-#> <environment: 0x000001c522033f58>
+#> <environment: 0x000001e0d7d53910>
 }\if{html}{\out{</div>}}
 }
 
