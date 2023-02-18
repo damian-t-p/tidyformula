@@ -51,7 +51,7 @@
 tidyformula <- function(formula,
                         data,
                         select_helpers = .select_helpers,
-                        nodistribute   = c("+", "-", "*", "^"),
+                        nodistribute   = c("+", ":", "*", "^"),
                         env            = rlang::caller_env()) {
 
   # To avoid passing a big data frame around in the internal functions, drop

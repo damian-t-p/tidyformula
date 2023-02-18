@@ -20,6 +20,7 @@ knitr::opts_chunk$set(
 <!-- badges: start -->
 [![R-CMD-check](https://github.com/damian-t-p/tidyformula/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/damian-t-p/tidyformula/actions/workflows/R-CMD-check.yaml)
 [![codecov](https://codecov.io/gh/damian-t-p/tidyformula/branch/main/graph/badge.svg?token=WX5JP57DHW)](https://app.codecov.io/gh/damian-t-p/tidyformula/)
+[![CRAN status](https://www.r-pkg.org/badges/version/tidyformula)](https://CRAN.R-project.org/package=tidyformula)
 <!-- badges: end -->
 
 `tidyformula()` translates formulas containing `tidyselect`-style selection helpers, expanding these helpers by evaluating `dplyr::select()` with the relevant selection helper on a supplied data frame.
@@ -70,7 +71,7 @@ as well as multiple-argument ones.
 tidyformula(y ~ poly(contains("x"), 3), data = df)
 ```
 
-The functions ``+``, ``-``, ``*``, and ``^`` are not distributed by default.
+The functions ``+``, ``:``, ``*``, and ``^`` are not distributed by default.
 ```{r}
 tidyformula( ~ everything()*z + starts_with("x")^2, data = df)
 ```
